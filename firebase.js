@@ -1,6 +1,3 @@
-<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
-
 const firebaseConfig = {
   apiKey: "AIzaSyDEalMh3_0pBhPeoJ2_KBCiL-ZFStQRrnY",
   authDomain: "wdlgeneratorv2-prototype.firebaseapp.com",
