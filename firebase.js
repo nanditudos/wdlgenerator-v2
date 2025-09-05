@@ -24,32 +24,12 @@ document.getElementById('signInBtn').addEventListener('click', () => {
     console.error(error.message);
   });
   
-  
-  /*signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      var user = userCredential.user;
-	  console.log("Signed in as" + user);
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-	  console.log(errorMessage);
-    });*/
+
 });
 
-// Sign out function
-/*document.getElementById('signOutBtn').addEventListener('click', () => {
-    signOut(auth).then(() => {
-        console.log('User signed out');
-    }).catch((error) => {
-        console.error(error);
-    });
-});*/
 
 // Listen to authentication state changes
-onAuthStateChanged(auth, (user) => {
+firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         //document.getElementById('whenSignedIn').hidden = false;
         //document.getElementById('whenSignedOut').hidden = true;

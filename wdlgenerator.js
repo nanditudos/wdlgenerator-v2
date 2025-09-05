@@ -17,11 +17,12 @@ firebase.auth().onAuthStateChanged((user) => {
       // You can now safely render project UI
     } else {
       // No user is signed in, redirect to login
+	  console.log("Welcome", user);
       window.location.href = "index.html";
     }
 });
 document.getElementById('signOutBtn').addEventListener('click', () => {
 	firebase.auth().signOut().then(() => {
-	  window.location.href = "signin.html";
+	  //window.location.href = "index.html";
 	});
 });
