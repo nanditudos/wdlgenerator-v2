@@ -19,13 +19,21 @@ const provider = new GoogleAuthProvider();
 
 // Sign in function
 document.getElementById('signInBtn').addEventListener('click', () => {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log(result.user);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+    var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  // [START auth_signin_password]
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+	  console.log("Signed in as" + user);
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+	  console.log(errorMessage);
+    });
 });
 
 function signInWithEmailPassword() {
