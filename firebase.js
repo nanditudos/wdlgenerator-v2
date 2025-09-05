@@ -1,7 +1,6 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDEalMh3_0pBhPeoJ2_KBCiL-ZFStQRrnY",
   authDomain: "wdlgeneratorv2-prototype.firebaseapp.com",
@@ -12,17 +11,24 @@ const firebaseConfig = {
   measurementId: "G-HCZV1TVF1K"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+firebase.initializeApp(firebaseConfig);
 
 // Sign in function
 document.getElementById('signInBtn').addEventListener('click', () => {
-    var email = document.getElementById("email").value;
+  var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   // [START auth_signin_password]
-  signInWithEmailAndPassword(auth, email, password)
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Redirect to the main page
+    window.location.href = "wdlgenerator.html";
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
+  
+  
+  /*signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
@@ -33,7 +39,7 @@ document.getElementById('signInBtn').addEventListener('click', () => {
       var errorCode = error.code;
       var errorMessage = error.message;
 	  console.log(errorMessage);
-    });
+    });*/
 });
 
 // Sign out function
