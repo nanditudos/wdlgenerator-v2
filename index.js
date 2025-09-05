@@ -6,7 +6,7 @@ document.getElementById('signInBtn').addEventListener('click', () => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
     // Redirect to the main page
-    window.location.href = "wdlgenerator.html";
+    window.location.href = "projectManager.html";
   })
   .catch((error) => {
     console.error(error.message);
