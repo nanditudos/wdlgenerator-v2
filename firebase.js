@@ -29,22 +29,23 @@ document.getElementById('signInBtn').addEventListener('click', () => {
 });
 
 // Sign out function
-document.getElementById('signOutBtn').addEventListener('click', () => {
+/*document.getElementById('signOutBtn').addEventListener('click', () => {
     signOut(auth).then(() => {
         console.log('User signed out');
     }).catch((error) => {
         console.error(error);
     });
-});
+});*/
 
 // Listen to authentication state changes
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        document.getElementById('whenSignedIn').hidden = false;
-        document.getElementById('whenSignedOut').hidden = true;
-        document.getElementById('userDetails').textContent = `Hello, ${user.displayName}. Your UID is: ${user.uid}`;
+        //document.getElementById('whenSignedIn').hidden = false;
+        //document.getElementById('whenSignedOut').hidden = true;
+        //document.getElementById('userDetails').textContent = `Hello, ${user.displayName}. Your UID is: ${user.uid}`;
+		console.log("Signed in.");
     } else {
-        document.getElementById('whenSignedIn').hidden = true;
-        document.getElementById('whenSignedOut').hidden = false;
+        //document.getElementById('whenSignedIn').hidden = true;
+        //document.getElementById('whenSignedOut').hidden = false;
     }
 })
