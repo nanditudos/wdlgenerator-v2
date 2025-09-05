@@ -22,7 +22,7 @@ document.getElementById('signInBtn').addEventListener('click', () => {
     var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   // [START auth_signin_password]
-  signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
