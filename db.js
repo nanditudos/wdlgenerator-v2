@@ -46,7 +46,9 @@ async function getWDLByName(userid, name) {
     .limit(1)
     .get();
   if (snapshot.empty) return null;
-  return snapshot.docs[0];
+  const data = snapshot.docs[0].data();
+  
+  return { id: snapshot.docs[0].id, name: data.name, data: data.data };
 }
 
 async function checkIfNameUsed(userid, name) {
@@ -68,5 +70,5 @@ async function cloneWDL(userid, id) {
 		return;
 	}
 	console.log("WDL cloned.");
-	await commitWDL(userid,newName,await getWDL(userid,clonable.id));
+	await commitWDL(userid,newName,(await getWDL(userid,id)).data);
 }
