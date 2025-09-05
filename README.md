@@ -1,1 +1,1 @@
-# wdlgenerator-v2
+This is the repository for the wdl generator (v2)
