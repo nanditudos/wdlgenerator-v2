@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,7 +22,7 @@ document.getElementById('signInBtn').addEventListener('click', () => {
     var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   // [START auth_signin_password]
-  firebase.auth().signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
       var user = userCredential.user;
@@ -35,25 +35,6 @@ document.getElementById('signInBtn').addEventListener('click', () => {
 	  console.log(errorMessage);
     });
 });
-
-function signInWithEmailPassword() {
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-  // [START auth_signin_password]
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      var user = userCredential.user;
-	  console.log("Signed in as" + user);
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-	  console.log(errorMessage);
-    });
-  // [END auth_signin_password]
-}
 
 // Sign out function
 /*document.getElementById('signOutBtn').addEventListener('click', () => {
