@@ -28,6 +28,25 @@ document.getElementById('signInBtn').addEventListener('click', () => {
         });
 });
 
+function signInWithEmailPassword() {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  // [START auth_signin_password]
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+	  console.log("Signed in as" + user);
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+	  console.log(errorMessage);
+    });
+  // [END auth_signin_password]
+}
+
 // Sign out function
 /*document.getElementById('signOutBtn').addEventListener('click', () => {
     signOut(auth).then(() => {
