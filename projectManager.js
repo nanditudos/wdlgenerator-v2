@@ -22,6 +22,7 @@ document.getElementById('signOutBtn').addEventListener('click', () => {
 document.getElementById('newWDLBtn').addEventListener('click', () => {
 	//Some magic to be happening here 
 	//await commitWDL(userId,prompt("WDLName","new WDL"),prompt("WDLText","WDLText"))
+	window.location.href = `wdlgenerator.html?id=new`;
 });
 function openWDL(id) {
 	window.location.href = `wdlgenerator.html?id=${id}`;
@@ -32,8 +33,8 @@ async function updateWDLList() {
 	wdlcontainer.innerHTML="";
 	wdls.forEach(function(wdl){
 		wdlcontainer.innerHTML+= `<table><tr><td style="text-align:left;">${wdl.name}</td><td style="text-align:right;">
-		<button onclick="await deleteWDL(userId,${wdl.id});await updateWDLList();">Delete</button>
-		<button onclick="await cloneWDL(userId,${wdl.id});await updateWDLList();">Clone</button>
+		<button onclick="deleteWDL(userId,${wdl.id}); updateWDLList();">Delete</button>
+		<button onclick="cloneWDL(userId,${wdl.id}); updateWDLList();">Clone</button>
 		<button onclick="open(${wdl.id})">Edit</button>
 		</td></tr></table>`
 	});
