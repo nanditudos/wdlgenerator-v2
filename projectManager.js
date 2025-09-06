@@ -4,13 +4,10 @@ let userId = "";
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       // User is signed in
-      console.log("Welcome", user.email);
-      // You can now safely render project UI
+      document.getElementById("logged-in-as-text").innerHTML=`Logged in as ${user.email}.`;
 	  userId = user.uid;
 	  updateWDLList();
     } else {
-      // No user is signed in, redirect to login
-	  console.log("Welcome", user);
       window.location.href = "index.html";
     }
 });

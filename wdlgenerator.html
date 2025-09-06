@@ -18,8 +18,29 @@
 	<div id="logged-in-as-text">Logged in as </div>
 	<button id="signOutBtn">Log out</button>
   </div>
+  <div>
+	<input id="WDLName" type="text"></input>
+	<button id="saveBtn">Save</Button>
+	<button id="exitBtn">Exit</Button>
+	<button id="importBtn">Import</Button>  <input type="file" id="importFileInput" style="display: none;" />
+	<button id="exportBtn">Export</Button>
+	<button id="generateWDLBtn">Generate WDL</Button>
+	<button id="generateInputFileBtn">Generate Input File</Button>
+  </div>
+  <div id="inputField">
+	<input id="debugInput" type="text"></input>
+	<select id="inputTypeSelector" value="singleEndFasta">
+		<option value="singleEndFasta">Single End</option>
+		<option value="pairedEndFasta">Paired End</option>
+	</select>
+	<div id="filenameInputField_singleEnd" style="display:block;">
+		<textarea id="filenames_singleEnd" rows="4" cols="50" placeholder="a.fa b.fa"></textarea>
+	</div>
+	<div id="filenameInputField_pairedEnd" style="display:none;">
+		<textarea id="filenames_pairedEnd" rows="4" cols="50" placeholder="a_F.fa a_R.fa b_F.fa b_R.fa"></textarea>
+	</div>
+	<div id="generatorField"></div>
+  </div>
   
-  <script>
-  </script>
 </body>
 </html>
