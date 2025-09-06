@@ -33,9 +33,9 @@ async function updateWDLList() {
 	wdlcontainer.innerHTML="";
 	wdls.forEach(function(wdl){
 		wdlcontainer.innerHTML+= `<table><tr><td style="text-align:left;">${wdl.name}</td><td style="text-align:right;">
-		<button onclick="deleteWDL(userId,${wdl.id}); updateWDLList();">Delete</button>
-		<button onclick="cloneWDL(userId,${wdl.id}); updateWDLList();">Clone</button>
-		<button onclick="open(${wdl.id})">Edit</button>
+		<button onclick="deleteWDL(userId,"${wdl.id}"); updateWDLList();">Delete</button>
+		<button onclick="cloneWDL(userId,"${wdl.id}"); updateWDLList();">Clone</button>
+		<button onclick="open("${wdl.id}")">Edit</button>
 		</td></tr></table>`
 	});
 }
