@@ -27,15 +27,23 @@ document.getElementById('newWDLBtn').addEventListener('click', () => {
 function openWDL(id) {
 	window.location.href = `wdlgenerator.html?id=${id}`;
 }
+async function clone(id) {
+	await cloneWDL(userId,id);
+	await updateWDLList();
+}
+async function delete(id) {
+	await deleteWDL(userId,id);
+	await updateWDLList();
+}
 async function updateWDLList() {
 	const wdls = await queryWDLs(userId);
 	let wdlcontainer = document.getElementById("WDLList");
 	wdlcontainer.innerHTML="";
 	wdls.forEach(function(wdl){
 		wdlcontainer.innerHTML+= `<table><tr><td style="text-align:left;">${wdl.name}</td><td style="text-align:right;">
-		<button onclick="deleteWDL(userId,'${wdl.id}'); updateWDLList();">Delete</button>
-		<button onclick="cloneWDL(userId,'${wdl.id}'); updateWDLList();">Clone</button>
-		<button onclick="open('${wdl.id}')">Edit</button>
+		<button onclick="delete('${wdl.id}')">Delete</button>
+		<button onclick="clone('${wdl.id}')">Clone</button>
+		<button onclick="openWDL('${wdl.id}')">Edit</button>
 		</td></tr></table>`
 	});
 }
