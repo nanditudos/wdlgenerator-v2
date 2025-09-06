@@ -7,6 +7,7 @@ firebase.auth().onAuthStateChanged((user) => {
       console.log("Welcome", user.email);
       // You can now safely render project UI
 	  userId = user.uid;
+	  updateWDLList();
     } else {
       // No user is signed in, redirect to login
 	  console.log("Welcome", user);
@@ -23,7 +24,7 @@ document.getElementById('newWDLBtn').addEventListener('click', () => {
 	//await commitWDL(userId,prompt("WDLName","new WDL"),prompt("WDLText","WDLText"))
 });
 function openWDL(id) {
-	window.location.href = "wdlgenerator.html";
+	window.location.href = `wdlgenerator.html?id=${id}`;
 }
 async function updateWDLList() {
 	const wdls = await queryWDLs(userId);
