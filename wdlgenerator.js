@@ -19,7 +19,7 @@ document.getElementById('signOutBtn').addEventListener('click', () => {
 });
 
 document.getElementById('saveBtn').addEventListener('click', () => {
-	await commitWDL(userId,document.getElementById("WDLName").value,document.getElementById("debugInput").value);
+	commitWDL(userId,document.getElementById("WDLName").value,document.getElementById("debugInput").value);
 });
 
 document.getElementById('exitBtn').addEventListener('click', () => {
