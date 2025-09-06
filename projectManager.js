@@ -23,10 +23,10 @@ document.getElementById('newWDLBtn').addEventListener('click', () => {
 	//await commitWDL(userId,prompt("WDLName","new WDL"),prompt("WDLText","WDLText"))
 });
 function openWDL(id) {
-	
+	window.location.href = "wdlgenerator.html";
 }
 async function updateWDLList() {
-	const wdls = await queryWDLs(userid);
+	const wdls = await queryWDLs(userId);
 	let wdlcontainer = document.getElementById("WDLList");
 	wdlcontainer.innerHTML="";
 	wdls.forEach(function(wdl){
