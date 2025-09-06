@@ -21,7 +21,7 @@ async function deleteWDL(userid, id) {
 async function commitWDL(userid, name, data) {
 	if (await checkIfNameUsed(userid, name)) {
 		if (!confirm(`The WDL ${name} already exists. Do you want to overwrite it?`)) return;
-		const id = await getWDLByName(userid,name).id;
+		const id = (await getWDLByName(userid,name)).id;
 		await db.collection("users").doc(userid).collection("wdls").doc(id).set({"data":data});
 		console.log("WDL written.");
 		return;
