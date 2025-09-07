@@ -19,7 +19,8 @@
 	<button id="signOutBtn">Log out</button>
   </div>
   <div>
-	<input id="WDLName" type="text"></input>
+	<label for="WDLName">Name:</label>
+	<input id="WDLName" type="text"></input><br>
 	<button id="saveBtn">Save</Button>
 	<button id="exitBtn">Exit</Button>
 	<button id="importBtn">Import</Button>  <input type="file" id="importFileInput" style="display: none;" />
@@ -28,7 +29,7 @@
 	<button id="generateInputFileBtn">Generate Input File</Button>
   </div>
   <div id="inputField">
-	<input id="debugInput" type="text"></input><br>
+	<input id="debugInput" type="text" hidden></input>
 	<div id="addTaskField0">
 	<button onclick="addTask(1,'multiFileInput_S')">Add Single End input</button>
 	<button onclick="addTask(1,'multiFileInput_P')">Add Paired End input</button>

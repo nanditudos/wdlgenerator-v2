@@ -5,7 +5,7 @@ let taskList = [];
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      // User is signed in
+      //User is signed in
       document.getElementById("logged-in-as-text").innerHTML=`Logged in as ${user.email}.`;
 	  userId = user.uid;
 	  onLoad();
@@ -33,6 +33,14 @@ document.getElementById('importBtn').addEventListener('click', () => {
 	document.getElementById("importFileInput").click();
 });
 
+document.getElementById('generateWDLBtn').addEventListener('click', () => {
+	exportWDL();
+});
+
+document.getElementById('generateInputFileBtn').addEventListener('click', () => {
+	exportInputFile();
+});
+
 document.getElementById("importFileInput").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (!file) return;
@@ -55,22 +63,18 @@ document.getElementById("importFileInput").addEventListener("change", async (eve
 document.getElementById("exportBtn").addEventListener("click", () => {
   const filename = `${document.getElementById("WDLName").value}.json`;
 
-  // Example data object (replace with your actual data)
   //const data = document.getElementById("debugInput").value;//change to wdl data later
   const data = generateWDLData();
-  // Convert to JSON and create a Blob
   const jsonStr = JSON.stringify(data, null, 2);
   //const jsonStr = data;
   const blob = new Blob([jsonStr], { type: "application/json" });
 
-  // Create a temporary download link
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
   a.click();
 
-  // Cleanup
   URL.revokeObjectURL(url);
 });
 
@@ -125,43 +129,46 @@ function addTask(number,template) {
 	const taskdata = getTask(template);
 	const innerName = `${taskdata.name}_${number}`
 	let field=document.getElementById(`subtaskField${number}`);
-	field.innerHTML+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
-	field.innerHTML+=`<div id="${innerName}_inputField">`;
+	let textBuilder="";
+	textBuilder+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
+	textBuilder+=`<div id="${innerName}_inputField">`;
 	taskdata.inputs.forEach(function(input){
 		switch (input.type) {
 			case "input":
 				break;
 			case "selection":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				field.innerHTML+=`<select id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``}>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				textBuilder+=`<select id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``}>`;
 				input.options.forEach(function(select_option){
-					field.innerHTML+=`<option value="${select_option.value}">${select_option.text}</option>`;
+					textBuilder+=`<option value="${select_option.value}">${select_option.text}</option>`;
 				});
-				field.innerHTML+=`</select>`;
+				textBuilder+=`</select><br>`;
 				break;
 			case "number":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				field.innerHTML+=`<input type="number" id="${innerName}_${input.name}" value=${input.value?input.value:0} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				textBuilder+=`<input type="number" id="${innerName}_${input.name}" value=${input.value?input.value:0} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}><br>`;
 				break;
 			case "textarea":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}><br>`;
 				break;
 		}
 	});
-	field.innerHTML+=`</div>`;
-	field.innerHTML+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
-	field.innerHTML+=`<div id="addTaskField${number}">`;
+	textBuilder+=`</div>`;
+	textBuilder+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
+	textBuilder+=`<div id="addTaskField${number}">`;
 	let outputs = [];
 	taskdata.outputs.forEach(function(output){
 		if (output.type=="output") outputs.push(output.value);
 	});
 	const adderTasks = getTasksWithInputs(outputs);
 	for (var i=0; i<adderTasks.length; i++) {
-		field.innerHTML+=`<button onclick="addTask(${number+1},'${adderTasks[i]}')">Add ${getTask(adderTasks[i]).text}</button>`;
+		textBuilder+=`<button onclick="addTask(${number+1},'${adderTasks[i]}')">Add ${getTask(adderTasks[i]).text}</button>`;
 	}
-	field.innerHTML+=`</div>`;
-	field.innerHTML+=`<div id="subtaskField${number+1}"></div>`;
+	textBuilder+=`</div>`;
+	textBuilder+=`<div id="subtaskField${number+1}"></div>`;
+	
+	field.innerHTML=textBuilder;
 	
 	document.getElementById(`addTaskField${number-1}`).style.display="none";
 	
@@ -207,4 +214,14 @@ function buildFromWDLData(wdlData) {
 		default:
 			alert("Invalid or outdated wdl format.");
 	}
+}
+
+function exportWDL() {
+	const data = WDLGenerator.generateWDL(generateWDLData());
+	console.log(data);
+}
+
+function exportInputFile() {
+	const data = JSON.stringify(WDLGenerator.generateInputFile(generateWDLData()), null, 2);
+	console.log(data);
 }
