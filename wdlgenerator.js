@@ -109,7 +109,7 @@ function getTasksWithInputs(outputlist) {
 				if (!outputlist.includes(input.value)) matches=false;
 			}
 		});
-		if (mathces) {
+		if (matches) {
 			tasks.push(task.name);
 		}
 	});
