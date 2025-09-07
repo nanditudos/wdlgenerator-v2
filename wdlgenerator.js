@@ -119,7 +119,7 @@ function getTasksWithInputs(outputlist) {
 function addTask(number,template) {
 	taskList.push(template);
 	const taskdata = getTask(template);
-	const innerName = `${taskdata.type}_${number}`
+	const innerName = `${taskdata.name}_${number}`
 	let field=document.getElementById(`subtaskField${number}`);
 	field.innerHTML+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
 	field.innerHTML+=`<div id="${innerName}_inputField">`;
@@ -128,20 +128,20 @@ function addTask(number,template) {
 			case "input":
 				break;
 			case "selection":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
 				field.innerHTML+=`<select id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``}>`;
 				input.options.forEach(function(select_option){
 					field.innerHTML+=`<option value="${select_option.value}">${select_option.text}</option>`;
 				});
-				field.innerHTML+=`</label>`;
+				field.innerHTML+=`</select>`;
 				break;
 			case "number":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
-				field.innerHTML+=`<input type="number" id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				field.innerHTML+=`<input type="number" id="${innerName}_${input.name}" value=${input.value?input.value:0} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
 				break;
 			case "textarea":
-				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
-				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:4}>`;
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}>`;
 				break;
 		}
 		field.innerHTML+=`<div id="inputField${number}">`;

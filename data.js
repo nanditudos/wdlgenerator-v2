@@ -9,6 +9,11 @@ const data = {
 					"type":"textarea",
 					"text":"File names",
 					"value":""
+				},
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"INITIALIZATION"
 				}
 			],
 			"outputs": [
@@ -29,6 +34,11 @@ const data = {
 					"type":"textarea",
 					"text":"File names (in pairs)",
 					"value":""
+				},
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"INITIALIZATION"
 				}
 			],
 			"outputs": [
