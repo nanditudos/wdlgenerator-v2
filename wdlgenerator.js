@@ -1,6 +1,7 @@
 let userId = "";
 let fileId = "";
 let wdlData = "";
+let taskList = [];
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -89,4 +90,84 @@ async function onLoad() {
 			}
 		}
 	}
+}
+
+function getTask(name) {
+	let taskdata = {};
+	data.taskDefinitions.forEach(function(task){
+		if (task.name==name) taskdata=task;
+	});
+	return taskdata;
+}
+
+function getTasksWithInputs(outputlist) {
+	let tasks = [];
+	data.taskDefinitions.forEach(function(task){
+		let matches=true;
+		task.inputs.forEach(function(input){
+			if (input.type=="input") {
+				if (!outputlist.includes(input.value)) matches=false;
+			}
+		});
+		if (mathces) {
+			tasks.push(task.name);
+		}
+	});
+	return tasks;
+}
+
+function addTask(number,template) {
+	taskList.push(template);
+	const taskdata = getTask(template);
+	const innerName = `${taskdata.type}_${number}`
+	let field=document.getElementById(`subtaskField${number}`);
+	field.innerHTML+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
+	field.innerHTML+=`<div id="${innerName}_inputField">`;
+	taskdata.inputs.forEach(function(input){
+		switch (input.type) {
+			case "input":
+				break;
+			case "selection":
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				field.innerHTML+=`<select id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``}>`;
+				input.options.forEach(function(select_option){
+					field.innerHTML+=`<option value="${select_option.value}">${select_option.text}</option>`;
+				});
+				field.innerHTML+=`</label>`;
+				break;
+			case "number":
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				field.innerHTML+=`<input type="number" id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
+				break;
+			case "number":
+				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:4}>`;
+				break;
+		}
+		field.innerHTML+=`<div id="inputField${number}">`;
+	});
+	field.innerHTML+=`</div>`;
+	field.innerHTML+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
+	field.innerHTML+=`<div id="addTaskField${number}">`;
+	let outputs = [];
+	taskdata.outputs.forEach(function(output){
+		if (output.type=="output") outputs.push(output.value);
+	});
+	const adderTasks = getTasksWithInputs(outputs);
+	for (var i=0; i<adderTasks.length; i++) {
+		field.innerHTML+=`<button onclick="addTask(${number+1},'${adderTasks[i]}')">Add ${getTask(adderTasks[i]).text}</button>`;
+	}
+	field.innerHTML+=`</div>`;
+	field.innerHTML+=`<div id="subtaskField${number+1}"></div>`;
+	
+	document.getElementById(`addTaskField${number-1}`).style.display="none";
+	
+}
+
+function deleteTask(number) {
+	document.getElementById(`subtaskField${number}`).innerHTML="";
+	document.getElementById(`addTaskField${number-1}`).style.display="block";
+	taskList=taskList.slice(0,number);
+
+	
 }
