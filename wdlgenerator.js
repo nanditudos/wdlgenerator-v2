@@ -139,7 +139,7 @@ function addTask(number,template) {
 				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
 				field.innerHTML+=`<input type="number" id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
 				break;
-			case "number":
+			case "textarea":
 				field.innerHTML+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
 				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:4}>`;
 				break;
