@@ -150,7 +150,7 @@ function addTask(number,template) {
 				break;
 			case "textarea":
 				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}><br>`;
+				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}></textarea><br>`;
 				break;
 		}
 	});
