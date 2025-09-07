@@ -1,6 +1,6 @@
 let userId = "";
 let fileId = "";
-let wdlData = "";
+//let wdlData = "";
 let taskList = [];
 
 firebase.auth().onAuthStateChanged((user) => {
@@ -20,7 +20,8 @@ document.getElementById('signOutBtn').addEventListener('click', () => {
 });
 
 document.getElementById('saveBtn').addEventListener('click', () => {
-	commitWDL(userId,document.getElementById("WDLName").value,document.getElementById("debugInput").value);
+	//commitWDL(userId,document.getElementById("WDLName").value,document.getElementById("debugInput").value);JSON.stringify(data, null, 2)
+	commitWDL(userId,document.getElementById("WDLName").value,JSON.stringify(generateWDLData()));
 });
 
 document.getElementById('exitBtn').addEventListener('click', () => {
@@ -39,10 +40,11 @@ document.getElementById("importFileInput").addEventListener("change", async (eve
   reader.onload = function (e) {
     try {
       const content = e.target.result;
-      //const parsed = JSON.parse(content);  // assuming JSON format
+      const parsed = JSON.parse(content);
+	  buildFromWDLData(parsed);
       //console.log("File content:", parsed);
-      wdlData=content;
-	  document.getElementById("debugInput").value=wdlData;
+      //wdlData=content;
+	  //document.getElementById("debugInput").value=wdlData;
     } catch (err) {
       console.error("Invalid file format or error parsing:", err);
     }
@@ -54,11 +56,11 @@ document.getElementById("exportBtn").addEventListener("click", () => {
   const filename = `${document.getElementById("WDLName").value}.json`;
 
   // Example data object (replace with your actual data)
-  const data = document.getElementById("debugInput").value;//change to wdl data later
-
+  //const data = document.getElementById("debugInput").value;//change to wdl data later
+  const data = generateWDLData();
   // Convert to JSON and create a Blob
-  //const jsonStr = JSON.stringify(data, null, 2);
-  const jsonStr = data;
+  const jsonStr = JSON.stringify(data, null, 2);
+  //const jsonStr = data;
   const blob = new Blob([jsonStr], { type: "application/json" });
 
   // Create a temporary download link
@@ -83,8 +85,10 @@ async function onLoad() {
 				//means a document is found and opened, otherwise new document
 				fileId=docId;
 				document.getElementById("WDLName").value=currentDocument.name;
-				wdlData=currentDocument.data;
-				document.getElementById("debugInput").value=wdlData;
+				const parsed = JSON.parse(currentDocument.data);
+				buildFromWDLData(parsed);
+				//wdlData=currentDocument.data;
+				//document.getElementById("debugInput").value=wdlData;
 				
 				//other wdl loading stuff later
 			}
@@ -144,7 +148,6 @@ function addTask(number,template) {
 				field.innerHTML+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}>`;
 				break;
 		}
-		field.innerHTML+=`<div id="inputField${number}">`;
 	});
 	field.innerHTML+=`</div>`;
 	field.innerHTML+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
@@ -167,7 +170,41 @@ function addTask(number,template) {
 function deleteTask(number) {
 	document.getElementById(`subtaskField${number}`).innerHTML="";
 	document.getElementById(`addTaskField${number-1}`).style.display="block";
-	taskList=taskList.slice(0,number);
+	taskList=taskList.slice(0,number-1);
+}
 
-	
+function generateWDLData() {
+	let outWDLData = {"name":document.getElementById("WDLName").value,"tasks":[],"version":0};
+	for (var i=0; i<taskList.length; i++) {
+		const taskdata = getTask(taskList[i]);
+		let adder = {"name":taskList[i]};
+		taskdata.inputs.forEach(function(input){
+			if (input.type!="input") {
+				adder[input.name]=document.getElementById(`${taskList[i]}_${i+1}_${input.name}`).value;
+			}
+		});
+		outWDLData.tasks.push(adder);
+	}
+	return outWDLData;
+}
+
+function buildFromWDLData(wdlData) {
+	switch (wdlData.version) {
+		case 0:
+			document.getElementById("WDLName").value = wdlData.name;
+			var i=1;
+			wdlData.tasks.forEach(function(task){
+				addTask(i,task.name);
+				const taskdata = getTask(task.name);
+				taskdata.inputs.forEach(function(input){
+					if (input.type!="input") {
+						document.getElementById(`${taskList[i-1]}_${i}_${input.name}`).value=task[input.name];
+					}
+				});
+				i+=1;
+			});
+			break;
+		default:
+			alert("Invalid or outdated wdl format.");
+	}
 }
