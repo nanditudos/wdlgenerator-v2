@@ -23,7 +23,7 @@ class WDLGenerator {
 		for (var i=1; i<WDLData.tasks.length; i++) {
 			const task = WDLData.tasks[i];
 			const taskData = getTask(task.name);
-			taskdata.inputs.forEach(function(input){
+			taskData.inputs.forEach(function(input){
 				if (input.type!="input") {
 					output[`${WDLData.name}.${WDLData.tasks[i].name}_${i+1}.${input.name}`]=WDLData.tasks[i][input.name];
 				}
