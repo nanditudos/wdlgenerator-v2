@@ -160,7 +160,7 @@ function addTask(number,template) {
 	});
 	textBuilder+=`</div>`;
 	textBuilder+=`</div>`;
-	textBuilder+=`<div id="addTaskField${number}">`;
+	textBuilder+=`<div id="addTaskField${number}" class="button-block">`;
 	let outputs = [];
 	taskdata.outputs.forEach(function(output){
 		if (output.type=="output") outputs.push(output.value);
