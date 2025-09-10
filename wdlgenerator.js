@@ -168,7 +168,7 @@ function addTask(number,template) {
 	}
 	textBuilder+=`</div>`;
 	textBuilder+=`</div>`;
-	textBuilder+=`<divid="subtaskField${number+1}"></div>`;
+	textBuilder+=`<div id="subtaskField${number+1}"></div>`;
 	
 	field.innerHTML=textBuilder;
 	
