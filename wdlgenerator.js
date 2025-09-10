@@ -130,7 +130,7 @@ function addTask(number,template) {
 	const innerName = `${taskdata.name}_${number}`
 	let field=document.getElementById(`subtaskField${number}`);
 	let textBuilder="";
-	textBuilder+=`<div id="${innerName}_blockCoverField class="task-block" ">`;
+	textBuilder+=`<div id="${innerName}_blockCoverField" class="task-block">`;
 	textBuilder+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
 	textBuilder+=`<div id="${innerName}_inputField">`;
 	taskdata.inputs.forEach(function(input){
