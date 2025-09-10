@@ -1,79 +1,107 @@
-/* === GENERAL === */
+/* ============================= */
+/* General Page Layout          */
+/* ============================= */
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f8faff;
-  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fcff;
+  color: #1e2e3e;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  line-height: 1.6;
 }
 
-/* === HEADER === */
+input, button, select, label {
+  font-size: 1rem;
+}
+
+/* ============================= */
+/* Header (Login Info)          */
+/* ============================= */
 #login-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e6f0ff;
-  padding: 10px 20px;
-  border-bottom: 2px solid #cce0ff;
-  margin-bottom: 20px;
-}
-
-#logged-in-as-text {
-  font-size: 14px;
-  color: #003366;
-}
-
-/* === BUTTONS === */
-button {
-  background-color: #007bff;
+  background-color: #005fa3;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  margin: 5px 5px 5px 0;
-  border-radius: 4px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#signOutBtn {
+  background-color: #ffffff;
+  color: #005fa3;
+  border: 1px solid #005fa3;
+  padding: 5px 12px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
+  border-radius: 4px;
 }
 
-button:hover {
-  background-color: #0056b3;
+#signOutBtn:hover {
+  background-color: #e6f1fb;
 }
 
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+/* ============================= */
+/* WDL Controls Section          */
+/* ============================= */
+#wdl-controls {
+  padding: 20px;
+  background-color: #eef6fb;
+  border-bottom: 1px solid #d0e4f2;
 }
 
-/* === FORM INPUTS === */
-input[type="text"] {
-  padding: 6px;
-  font-size: 14px;
+.form-row {
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  margin-right: 10px;
+}
+
+#WDLName {
+  padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin: 5px 0 10px 0;
   width: 250px;
 }
 
-label {
-  font-weight: bold;
-  color: #003366;
+/* ============================= */
+/* Button Group Styling          */
+/* ============================= */
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-/* === CONTAINERS === */
+.button-group button {
+  background-color: #0074d9;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button-group button:hover {
+  background-color: #005fa3;
+}
+
+/* ============================= */
+/* Main Dynamic Content Area     */
+/* ============================= */
 #inputField {
-  background-color: #ffffff;
-  border: 1px solid #d9e2ec;
   padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-#addTaskField0 {
-  margin-bottom: 15px;
+/* Dynamically inserted fields (will expand later) */
+#subtaskField1 {
+  margin-top: 20px;
 }
 
-/* === HIDING ELEMENTS SAFELY === */
-[hidden], #importFileInput {
+/* Keep hidden inputs hidden */
+[hidden],
+input[type="file"][hidden] {
   display: none !important;
 }

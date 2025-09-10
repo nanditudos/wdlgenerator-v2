@@ -14,28 +14,35 @@
   <script src="generator.js" defer></script>
 </head>
 <body>
-  <div id="login-header">
-	<div id="logged-in-as-text">Logged in as </div>
-	<button id="signOutBtn">Log out</button>
-  </div>
-  <div>
-	<label for="WDLName">Name:</label>
-	<input id="WDLName" type="text"></input><br>
-	<button id="saveBtn">Save</Button>
-	<button id="exitBtn">Exit</Button>
-	<button id="importBtn">Import</Button>  <input type="file" id="importFileInput" style="display: none;" />
-	<button id="exportBtn">Export</Button>
-	<button id="generateWDLBtn">Generate WDL</Button>
-	<button id="generateInputFileBtn">Generate Input File</Button>
-  </div>
-  <div id="inputField">
-	<input id="debugInput" type="text" hidden></input>
-	<div id="addTaskField0">
-	<button onclick="addTask(1,'multiFileInput_S')">Add Single End input</button>
-	<button onclick="addTask(1,'multiFileInput_P')">Add Paired End input</button>
-	</div>
-	<div id="subtaskField1"></div>
-  </div>
+  <header id="login-header">
+    <div id="logged-in-as-text">Logged in as </div>
+    <button id="signOutBtn">Log out</button>
+  </header>
+  <section id="wdl-controls">
+    <div class="form-row">
+      <label for="WDLName">Name:</label>
+      <input id="WDLName" type="text" />
+    </div>
+    <div class="button-group">
+      <button id="saveBtn">Save</button>
+      <button id="exitBtn">Exit</button>
+      <button id="importBtn">Import</button>
+      <input type="file" id="importFileInput" hidden />
+      <button id="exportBtn">Export</button>
+      <button id="generateWDLBtn">Generate WDL</button>
+      <button id="generateInputFileBtn">Generate Input File</button>
+    </div>
+  </section>
+  <main id="inputField">
+    <input id="debugInput" type="text" hidden />
+
+    <div id="addTaskField0" class="button-group">
+      <button onclick="addTask(1,'multiFileInput_S')">Add Single End input</button>
+      <button onclick="addTask(1,'multiFileInput_P')">Add Paired End input</button>
+    </div>
+
+    <div id="subtaskField1"></div>
+  </main>
   
 </body>
 </html>
