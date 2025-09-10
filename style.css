@@ -171,3 +171,33 @@ input[type="file"][hidden] {
 .task-block > div[id^="subtaskField"] {
   margin-top: 1rem;
 }
+
+/* Align task name and delete button inline */
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Task name stays on the left */
+.task-header > div[id$="nameField"] {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #2a4d75;
+}
+
+/* Delete button styled red */
+.task-header > div[id$="deleteField"] button {
+  background-color: #cc0000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.85em;
+}
+
+.task-header > div[id$="deleteField"] button:hover {
+  background-color: #a80000;
+}

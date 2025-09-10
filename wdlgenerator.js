@@ -131,32 +131,35 @@ function addTask(number,template) {
 	let field=document.getElementById(`subtaskField${number}`);
 	let textBuilder="";
 	textBuilder+=`<div id="${innerName}_blockCoverField" class="task-block">`;
+	textBuilder+=`<div class="task-header">`;
 	textBuilder+=`<div id="${innerName}_nameField">${taskdata.text}</div>`;
+	textBuilder+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
+	textBuilder+=`</div>`;
 	textBuilder+=`<div id="${innerName}_inputField">`;
 	taskdata.inputs.forEach(function(input){
 		switch (input.type) {
 			case "input":
 				break;
 			case "selection":
-				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
 				textBuilder+=`<select id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``}>`;
 				input.options.forEach(function(select_option){
 					textBuilder+=`<option value="${select_option.value}">${select_option.text}</option>`;
 				});
-				textBuilder+=`</select><br>`;
+				textBuilder+=`</select>`;
 				break;
 			case "number":
-				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				textBuilder+=`<input type="number" id="${innerName}_${input.name}" value=${input.value?input.value:0} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}><br>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				textBuilder+=`<input type="number" id="${innerName}_${input.name}" value=${input.value?input.value:0} ${input.min?`min="${input.min}"`:``} ${input.max?`max="${input.max}"`:``}>`;
 				break;
 			case "textarea":
-				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label><br>`;
-				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}></textarea><br>`;
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}></textarea>`;
 				break;
 		}
 	});
 	textBuilder+=`</div>`;
-	textBuilder+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
+	textBuilder+=`</div>`;
 	textBuilder+=`<div id="addTaskField${number}">`;
 	let outputs = [];
 	taskdata.outputs.forEach(function(output){
@@ -167,7 +170,7 @@ function addTask(number,template) {
 		textBuilder+=`<button onclick="addTask(${number+1},'${adderTasks[i]}')">Add ${getTask(adderTasks[i]).text}</button>`;
 	}
 	textBuilder+=`</div>`;
-	textBuilder+=`</div>`;
+	
 	textBuilder+=`<div id="subtaskField${number+1}"></div>`;
 	
 	field.innerHTML=textBuilder;
