@@ -105,3 +105,69 @@ input, button, select, label {
 input[type="file"][hidden] {
   display: none !important;
 }
+
+/* General task block container */
+.task-block {
+  border: 1px solid #cce0ff;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #f8fbff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Task name/title */
+.task-block > div[id$="nameField"] {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+  color: #2a4d75;
+}
+
+/* Inputs and labels inside task */
+.task-block label {
+  font-weight: 500;
+  display: block;
+  margin-top: 0.6rem;
+  color: #333;
+}
+
+.task-block input[type="text"],
+.task-block input[type="number"],
+.task-block select,
+.task-block textarea {
+  width: 100%;
+  padding: 0.4rem;
+  margin-top: 0.2rem;
+  border: 1px solid #ccddee;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+/* Button section (add/remove task) */
+.task-block > div[id$="deleteField"],
+.task-block > div[id^="addTaskField"] {
+  margin-top: 1rem;
+}
+
+/* Add/remove buttons */
+.task-block button {
+  background-color: #e0f0ff;
+  border: 1px solid #99cfff;
+  padding: 0.4rem 0.8rem;
+  margin: 0.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #003366;
+}
+
+.task-block button:hover {
+  background-color: #cce6ff;
+}
+
+/* Optional: vertical spacing for subtasks */
+.task-block > div[id^="subtaskField"] {
+  margin-top: 1rem;
+}

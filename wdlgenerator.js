@@ -166,7 +166,7 @@ function addTask(number,template) {
 		textBuilder+=`<button onclick="addTask(${number+1},'${adderTasks[i]}')">Add ${getTask(adderTasks[i]).text}</button>`;
 	}
 	textBuilder+=`</div>`;
-	textBuilder+=`<div id="subtaskField${number+1}"></div>`;
+	textBuilder+=`<div class="task-block" id="subtaskField${number+1}"></div>`;
 	
 	field.innerHTML=textBuilder;
 	
