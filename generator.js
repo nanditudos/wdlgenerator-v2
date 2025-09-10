@@ -39,17 +39,19 @@ class WDLGenerator {
 		
 		//generate workflow
 		output+=`workflow ${reducedWDLName} {\n`;
+		output+=`  input {\n`;
 		switch (WDLData.tasks[0].name) {
 			case "multiFileInput_S":
-				output+=`  Array[String] files\n`;
+				output+=`    Array[String] files\n`;
 				currentFiles.push({"name":"RAW_FASTA","array":true,"caller_core":"files"})
 				break;
 			case "multiFileInput_P":
-				output+=`  Array[Array[String]] files\n`;
+				output+=`    Array[Array[String]] files\n`;
 				currentFiles.push({"name":"RAW_FASTA_FORWARD","array":true,"caller_core":"files","caller_access":"[0]"})
 				currentFiles.push({"name":"RAW_FASTA_REVERSE","array":true,"caller_core":"files","caller_access":"[1]"})
 				break;
 		}
+		output+=`  }\n`;
 		for (var i=1; i<WDLData.tasks.length; i++) {
 			const task = WDLData.tasks[i];
 			const taskData = getTask(task.name);
