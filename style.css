@@ -188,10 +188,10 @@ input[type="file"][hidden] {
 
 /* Delete button styled red */
 .task-header > div[id$="deleteField"] button {
-  background-color: #cc0000;
+  background-color: #cce0e0;
   color: #fff;
   font-weight: bold;
-  border: none;
+  border: solid 1px #cc0000;
   border-radius: 4px;
   padding: 0.3rem 0.8rem;
   cursor: pointer;

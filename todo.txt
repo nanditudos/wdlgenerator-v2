@@ -3,7 +3,6 @@ HIGH Priority:
  - Stylize the webpage
  - Add Password reset option
  - Make wdl generator actually export file
- - Test wdls (kindof obvious)
  - Add inputs: raw text, Shown text
  - Make documentation
 
@@ -23,3 +22,4 @@ Low Priority:
  - Make multilayer scattering
  - Record last modified time
  - Add more input protection: no empty string inputs, paired data should be checked for file amount to be even
+ - Add hidden option for tasks to skip command on generation
