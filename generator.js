@@ -57,29 +57,21 @@ class WDLGenerator {
 			const taskData = getTask(task.name);
 			const taskName = `${WDLData.tasks[i].name}_${i+1}`;
 			let inputs = [];
+			let newCurrentFiles = [];
 			taskData.inputs.forEach(function(input){
 				if (input.type=="input") {
 					currentFiles.forEach(function(current){
 						if (input.value==current.name) {
-							let adder = {"name":input.name,"value":current,"array":(input.array?input.array:false),"passed":(input.passed?input.passed:false)};
-							if (input.access) {
-								adder.caller_access=input.access;
-							}
+							let adder = {"name":input.name,"value":current,"array":(input.array?input.array:false)};
 							inputs.push(adder);
+							if (input.passed) {
+								newCurrentFiles.push(current);
+							}
 						}
 					});
 				}
 			});
-			currentFiles=[];
-			console.log(inputs);
-			inputs.forEach(function(current){
-				if (current.passed) {
-					let adder = {current};//Important: If you make nested object later in currentFile format then you need to change this to a deep copy instead of a shallow copy
-					adder.passed=false;
-					currentFiles.push(adder);
-				}
-			});
-			console.log(inputs);
+			currentFiles=newCurrentFiles;
 			const scatter = !inputs[0].array && inputs[0].value.array;
 			if (scatter) {
 				output+=`  scatter (${iteratorList[scatterDepth]} in range(length(${inputs[0].value.caller_core}))) {\n`;
@@ -94,9 +86,13 @@ class WDLGenerator {
 					const isArray = out.array?out.array:false;
 					if (isArray) {
 						console.error("Warning! Nested arrays used. Might result in undefined behavior.");
-						currentFiles.push({"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`});
+						let adder = {"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`};
+						if (out.access) adder.caller_access=out.access;
+						currentFiles.push(adder);
 					} else {
-						currentFiles.push({"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`});
+						let adder = {"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`};
+						if (out.access) adder.caller_access=out.access;
+						currentFiles.push(adder);
 					}
 				});
 			} else {
@@ -109,9 +105,13 @@ class WDLGenerator {
 				if (taskData.outputs) taskData.outputs.forEach(function(out){
 					const isArray = out.array?out.array:false;
 					if (isArray) {
-						currentFiles.push({"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`});
+						let adder = {"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`};
+						if (out.access) adder.caller_access=out.access;
+						currentFiles.push(adder);
 					} else {
-						currentFiles.push({"name":out.value,"array":false,"caller_core":`${taskName}.${out.name}`});
+						let adder = {"name":out.value,"array":false,"caller_core":`${taskName}.${out.name}`};
+						if (out.access) adder.caller_access=out.access;
+						currentFiles.push(adder);
 					}
 				});
 			}
