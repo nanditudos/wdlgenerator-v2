@@ -136,9 +136,13 @@ function addTask(number,template) {
 	textBuilder+=`<div id="${innerName}_deleteField"><button id="${innerName}_deleteButton" onclick="${`deleteTask(${number})`}">Remove</button></div>`;
 	textBuilder+=`</div>`;
 	textBuilder+=`<div id="${innerName}_inputField">`;
+	let outputs = [];
 	taskdata.inputs.forEach(function(input){
 		switch (input.type) {
 			case "input":
+				if (input.passed) {
+					outputs.push(input.value);
+				}
 				break;
 			case "selection":
 				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
@@ -165,12 +169,12 @@ function addTask(number,template) {
 				break;
 
 		}
+		
 	});
 	textBuilder+=`</div>`;
 	textBuilder+=`</div>`;
 	textBuilder+=`<div id="addTaskField${number}" class="button-group">`;
-	let outputs = [];
-	taskdata.outputs.forEach(function(output){
+	if (taskdata.outputs) taskdata.outputs.forEach(function(output){
 		if (output.type=="output") outputs.push(output.value);
 	});
 	const adderTasks = getTasksWithInputs(outputs);
