@@ -73,7 +73,7 @@ class WDLGenerator {
 			currentFiles=[];
 			inputs.forEach(function(current){
 				if (current.passed) {
-					let adder = current;
+					let adder = {current};//Important: If you make nested object later in currentFile format then you need to change this to a deep copy instead of a shallow copy
 					adder.passed=false;
 					currentFiles.push(adder);
 				}
