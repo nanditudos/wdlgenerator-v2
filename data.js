@@ -306,7 +306,7 @@ const data = {
 				{
 					"name":"OUTPUT",
 					"type":"output",
-					"value":"BAM_SORTED"
+					"value":"BAI"
 				},
 				{
 					"name":"OUTPUT_BAM",

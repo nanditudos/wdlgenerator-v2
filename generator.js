@@ -88,7 +88,7 @@ class WDLGenerator {
 				});
 				output+=`    }\n`;
 				output+=`  }\n`;
-				taskData.outputs.forEach(function(out){
+				if (taskData.outputs) taskData.outputs.forEach(function(out){
 					const isArray = out.array?out.array:false;
 					if (isArray) {
 						console.error("Warning! Nested arrays used. Might result in undefined behavior.");
@@ -104,7 +104,7 @@ class WDLGenerator {
 					output+=`      ${input.name} = ${input.value.caller_core}${inputs[0].value.caller_access?inputs[0].value.caller_access:""}\n`;
 				});
 				output+=`  }\n`;
-				taskData.outputs.forEach(function(out){
+				if (taskData.outputs) taskData.outputs.forEach(function(out){
 					const isArray = out.array?out.array:false;
 					if (isArray) {
 						currentFiles.push({"name":out.value,"array":true,"caller_core":`${taskName}.${out.name}`});
