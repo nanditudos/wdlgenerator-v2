@@ -173,7 +173,7 @@ function addTask(number,template) {
 	});
 	textBuilder+=`</div>`;
 	textBuilder+=`</div>`;
-	textBuilder+=`<div id="addTaskField${number}" class="button-group">`;
+	textBuilder+=`<div id="addTaskField${number}" class="button-block">`;
 	if (taskdata.outputs) taskdata.outputs.forEach(function(output){
 		if (output.type=="output") outputs.push(output.value);
 	});
