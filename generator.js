@@ -71,6 +71,7 @@ class WDLGenerator {
 				}
 			});
 			currentFiles=[];
+			console.log(inputs);
 			inputs.forEach(function(current){
 				if (current.passed) {
 					let adder = {current};//Important: If you make nested object later in currentFile format then you need to change this to a deep copy instead of a shallow copy
@@ -78,6 +79,7 @@ class WDLGenerator {
 					currentFiles.push(adder);
 				}
 			});
+			console.log(inputs);
 			const scatter = !inputs[0].array && inputs[0].value.array;
 			if (scatter) {
 				output+=`  scatter (${iteratorList[scatterDepth]} in range(length(${inputs[0].value.caller_core}))) {\n`;
