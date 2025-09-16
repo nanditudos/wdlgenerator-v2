@@ -156,6 +156,14 @@ function addTask(number,template) {
 				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
 				textBuilder+=`<textarea id="${innerName}_${input.name}" ${input.value?`value="${input.value}"`:``} rows=${input.rows?input.rows:4} cols=${input.cols?input.cols:50}></textarea>`;
 				break;
+			case "text":
+				textBuilder+=`<label for="${innerName}_${input.name}">${input.text}</label>`;
+				textBuilder+=`<input type="text" id="${innerName}_${input.name}" value=${input.value?`${input.value}`:""}>`;
+				break;
+			case "label":
+				textBuilder+=`<div id="${innerName}_${input.name}" class="input_shown_text">${input.text}</div>`;
+				break;
+
 		}
 	});
 	textBuilder+=`</div>`;
@@ -224,9 +232,37 @@ function buildFromWDLData(wdlData) {
 function exportWDL() {
 	const data = WDLGenerator.generateWDL(generateWDLData());
 	console.log(data);
+	const filename = `${document.getElementById("WDLName").value}.wdl`;
+
+	//const data = document.getElementById("debugInput").value;//change to wdl data later
+	const jsonStr = data;
+	//const jsonStr = data;
+	const blob = new Blob([jsonStr], { type: "application/json" });
+
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = filename;
+	a.click();
+
+	URL.revokeObjectURL(url);
 }
 
 function exportInputFile() {
 	const data = JSON.stringify(WDLGenerator.generateInputFile(generateWDLData()), null, 2);
 	console.log(data);
+	const filename = `${document.getElementById("WDLName").value}_input.json`;
+
+	//const data = document.getElementById("debugInput").value;//change to wdl data later
+	const jsonStr = JSON.stringify(data, null, 2);
+	//const jsonStr = data;
+	const blob = new Blob([jsonStr], { type: "application/json" });
+
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = filename;
+	a.click();
+
+	URL.revokeObjectURL(url);
 }

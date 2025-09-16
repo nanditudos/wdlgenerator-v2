@@ -61,13 +61,24 @@ class WDLGenerator {
 				if (input.type=="input") {
 					currentFiles.forEach(function(current){
 						if (input.value==current.name) {
-							inputs.push({"name":input.name,"value":current,"array":(input.array?input.array:false)});
+							let adder = {"name":input.name,"value":current,"array":(input.array?input.array:false),"passed":(input.passed?input.passed:false)};
+							if (input.access) {
+								adder.caller_access=input.access;
+							}
+							inputs.push(adder);
 						}
 					});
 				}
 			});
-			const scatter = !inputs[0].array && inputs[0].value.array;
 			currentFiles=[];
+			inputs.forEach(function(current){
+				if (current.passed) {
+					let adder = current;
+					adder.passed=false;
+					currentFiles.push(adder);
+				}
+			});
+			const scatter = !inputs[0].array && inputs[0].value.array;
 			if (scatter) {
 				output+=`  scatter (${iteratorList[scatterDepth]} in range(length(${inputs[0].value.caller_core}))) {\n`;
 				output+=`    call ${taskName} {\n`;

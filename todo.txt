@@ -1,6 +1,5 @@
 HIGH Priority:
  - More task definitions
- - Stylize the webpage
  - Add Password reset option
  - Make wdl generator actually export file
  - Add inputs: raw text, Shown text
@@ -23,3 +22,4 @@ Low Priority:
  - Record last modified time
  - Add more input protection: no empty string inputs, paired data should be checked for file amount to be even
  - Add hidden option for tasks to skip command on generation
+ - Add guest mode

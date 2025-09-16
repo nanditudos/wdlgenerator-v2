@@ -62,26 +62,57 @@ const data = {
 				{
 					"name":"INPUT",
 					"type":"input",
-					"value":"RAW_FASTA"
+					"value":"RAW_FASTA",
+					"passed":true
 				}
 			],
-			"outputs": [
+			/*"outputs": [
 				{
 					"name":"OUTPUT",
 					"type":"output",
 					"value":"RAW_FASTA"
 				}
-			],
+			],*/
 			"wdl": {
 				"generator": {
 					"inputs": [
 						'String INPUT'
 					],
-					"outputs": [
+					/*"outputs": [
 						'String OUTPUT = INPUT'
-					],
+					],*/
 					"command": [
 						'fastqc ${INPUT}'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"FastQC_P",//Paired end fastqc
+			"text":"FastQC",
+			"inputs" : [
+				{
+					"name":"FORWARD",
+					"type":"input",
+					"value":"RAW_FASTA_FORWARD",
+					"passed":true
+				},
+				{
+					"name":"REVERSE",
+					"type":"input",
+					"value":"RAW_FASTA_REVERSE",
+					"passed":true
+				},
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String FORWARD',
+						'String REVERSE',
+					],
+					"command": [
+						'fastqc ${FORWARD} ${REVERSE}'
 					]
 				}
 			}
@@ -150,6 +181,151 @@ const data = {
 					],
 					"command": [
 						'trimmomatic SE -phred33 -summary ${SUMMARY} ${INPUT} ${OUT} ${UNPAIREDOUT} ILLUMINACLIP:${ILLUMINACLIP} SLIDINGWINDOW:${SLIDINGWINDOW} MINLEN:${MINLEN} 2> trimlog.txt'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"AlignBWA_S",
+			"text":"Align (BWA)",
+			"inputs" : [
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"RAW_FASTA"
+				},
+				{
+					"name":"INPUT",
+					"type":"text",
+					"value":"",
+					"text":"Reference genome"
+				},
+			],
+			"outputs": [
+				{
+					"name":"OUTPUT",
+					"type":"output",
+					"value":"SAM"
+				}
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String INPUT',
+						'String REFERENCEGENOME',
+						'String OUTSAMFILE = sub(INPUT, "\\.fastq.gz$", "\\.sam")'
+					],
+					"outputs": [
+						'String OUTPUT = "${OUTSAMFILE}'
+					],
+					"command": [
+						'bwa mem ${REFERENCEGENOME} ${INPUT} > ${OUTSAMFILE}'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"SamToBam",
+			"text":"Sam to Bam",
+			"inputs" : [
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"SAM"
+				},
+			],
+			"outputs": [
+				{
+					"name":"OUTPUT",
+					"type":"output",
+					"value":"BAM"
+				}
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String INPUT',
+						'String outputFile = sub(INPUT, "\\.sam$", ".bam")',
+					],
+					"outputs": [
+						'String OUTPUT = "${outputFile}"'
+					],
+					"command": [
+						'samtools view -b -S ${INPUT} > ${outputFile}'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"SortBam",
+			"text":"Sort Bam",
+			"inputs" : [
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"BAM"
+				},
+			],
+			"outputs": [
+				{
+					"name":"OUTPUT",
+					"type":"output",
+					"value":"BAM_SORTED"
+				}
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String INPUT',
+						'String outputFile = sub(bamFileInput, "\\.bam$", "_sorted.bam")',
+					],
+					"outputs": [
+						'String OUTPUT = "${outputFile}"'
+					],
+					"command": [
+						'samtools sort ${INPUT} -o ${outputFile}'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"SortBam",
+			"text":"Sort Bam",
+			"inputs" : [
+				{
+					"name":"INPUT",
+					"type":"input",
+					"value":"BAM_SORTED"
+				},
+			],
+			"outputs": [
+				{
+					"name":"OUTPUT",
+					"type":"output",
+					"value":"BAM_SORTED"
+				},
+				{
+					"name":"OUTPUT_BAM",
+					"type":"output",
+					"value":"BAM_SORTED_INDEXED"
+				},
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String INPUT',
+						'String outputFile = sub(inputBamFile, "\\.bam$", ".bai")',
+					],
+					"outputs": [
+						'String OUTPUT = "${outputFile}"',
+						'String OUTPUT_BAM = INPUT'
+					],
+					"command": [
+						'samtools index -b ${INPUT} ${outputFile}'
 					]
 				}
 			}
