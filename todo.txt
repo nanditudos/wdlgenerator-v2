@@ -1,9 +1,10 @@
 HIGH Priority:
  - Add Password reset option
+ - Stylize project manager files
  - Make documentation
 
 Medium Priority:
- - Add descriptions and infoboxes to tasks and maybe to fix things
+ - Add descriptions and infoboxes to tasks
  - Add inputs: checkbox, radio
  - Merge scatters, avoid indexing if possible
  - Make file input process "" to be able to add files with spaces in them

@@ -429,8 +429,8 @@ const data = {
 		},
 		
 		{
-			"name":"SortBam",
-			"text":"Sort Bam",
+			"name":"IndexBam",
+			"text":"Index Bam",
 			"inputs" : [
 				{
 					"name":"INPUT",
