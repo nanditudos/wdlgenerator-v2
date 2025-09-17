@@ -78,7 +78,7 @@ class WDLGenerator {
 				output+=`    call ${taskName} {\n`;
 				output+=`      input:\n`;
 				inputs.forEach(function(input){
-					output+=`        ${input.name} = ${input.value.caller_core}[${iteratorList[scatterDepth]}]${inputs[0].value.caller_access?inputs[0].value.caller_access:""}\n`;
+					output+=`        ${input.name} = ${input.value.caller_core}[${iteratorList[scatterDepth]}]${input.value.caller_access?input.value.caller_access:""}\n`;
 				});
 				output+=`    }\n`;
 				output+=`  }\n`;
@@ -99,7 +99,7 @@ class WDLGenerator {
 				output+=`  call ${taskName} {\n`;
 				output+=`    input:\n`;
 				inputs.forEach(function(input){
-					output+=`      ${input.name} = ${input.value.caller_core}${inputs[0].value.caller_access?inputs[0].value.caller_access:""}\n`;
+					output+=`      ${input.name} = ${input.value.caller_core}${input.value.caller_access?input.value.caller_access:""}\n`;
 				});
 				output+=`  }\n`;
 				if (taskData.outputs) taskData.outputs.forEach(function(out){

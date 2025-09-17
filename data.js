@@ -45,11 +45,13 @@ const data = {
 				{
 					"type":"output",
 					"value":"RAW_FASTA_FORWARD",
+					"access":"[0]",
 					"array":true
 				},
 				{
 					"type":"output",
 					"value":"RAW_FASTA_REVERSE",
+					"access":"[1]",
 					"array":true
 				}
 			]
