@@ -2,6 +2,7 @@ HIGH Priority:
  - Add Password reset option
  - Stylize project manager files
  - Make documentation
+ - Add fastp
 
 Medium Priority:
  - Add descriptions and infoboxes to tasks
