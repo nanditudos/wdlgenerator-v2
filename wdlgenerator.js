@@ -203,7 +203,7 @@ function generateWDLData() {
 		const taskdata = getTask(taskList[i]);
 		let adder = {"name":taskList[i]};
 		taskdata.inputs.forEach(function(input){
-			if (input.type!="input") {
+			if (input.type!="input"&&input.type!="label") {
 				adder[input.name]=document.getElementById(`${taskList[i]}_${i+1}_${input.name}`).value;
 			}
 		});

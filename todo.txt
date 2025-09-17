@@ -1,19 +1,15 @@
 HIGH Priority:
- - More task definitions
  - Add Password reset option
- - Make wdl generator actually export file
- - Add inputs: raw text, Shown text
  - Make documentation
 
 Medium Priority:
- - Add way to keep task inputs from being removed (and update fastqc accordingly)
  - Add descriptions and infoboxes to tasks and maybe to fix things
  - Add inputs: checkbox, radio
  - Merge scatters, avoid indexing if possible
- - Add complex outputs (that include stuff like structs pairs, possibly make pair automatic)
  - Make file input process "" to be able to add files with spaces in them
  - Make a unique file input that does this processing every time not just on input
  - Add custom input to select and radio
+ - Add raw text generator input
 
 Low Priority:
  - Test compatibility with other browsers
@@ -23,3 +19,6 @@ Low Priority:
  - Add more input protection: no empty string inputs, paired data should be checked for file amount to be even
  - Add hidden option for tasks to skip command on generation
  - Add guest mode
+ - Ideas for new input types
+ - Add complex outputs (pairs, structs, arrays), these can be used with the "access" tag but may make them unique output types
+

@@ -189,6 +189,94 @@ const data = {
 		},
 		
 		{
+			"name":"Trimmomatic_P",//Paired end trimmomatic
+			"text":"Trimmomatic",
+			"inputs" : [
+				{
+					"name":"FORWARD",
+					"type":"input",
+					"value":"RAW_FASTA_FORWARD"
+				},
+				{
+					"name":"REVERSE",
+					"type":"input",
+					"value":"RAW_FASTA_REVERSE"
+				},
+				{
+					"name":"ILLUMINACLIP",
+					"type":"selection",
+					"value":"TruSeq3-SE:2:30:10",
+					"text":"Illumina Clip",
+					"options": [
+						{"value":"TruSeq3-SE:2:30:10","text":"TruSeq3-SE:2:30:10"}
+					]
+				},
+				{
+					"name":"MINLEN",
+					"type":"number",
+					"value":"20",
+					"text":"Minlen",
+					"min":"16"
+				},
+				{
+					"name":"SLIDINGWINDOW",
+					"type":"number",
+					"value":"4",
+					"text":"Sliding Window",
+					"min":"0",
+					"max":"16"
+				}
+			],
+			"outputs": [
+				{
+					"name":"FORWARDOUTPUT",
+					"type":"output",
+					"value":"RAW_FASTA_FORWARD"
+				},
+				{
+					"name":"REVERSEOUTPUT",
+					"type":"output",
+					"value":"RAW_FASTA_REVERSE"
+				},
+				{
+					"name":"UNPAIREDFORWARDOUTPUT",
+					"type":"output",
+					"value":"RAW_FASTA_UNPAIRED_FORWARD"
+				},
+				{
+					"name":"UNPAIREDREVERSEOUTPUT",
+					"type":"output",
+					"value":"RAW_FASTA_UNPAIRED_REVERSE"
+				},
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String SUMMARY = "summary.txt"',
+						'String FORWARD',
+						'String REVERSE',
+						'String ILLUMINACLIP',
+						'String SLIDINGWINDOW',
+						'String MINLEN',
+						'String FORWARDOUT = sub(FORWARD, "\\.fastq.gz$", "\\_trimmed.fastq.gz")',
+						'String REVERSEOUT = sub(REVERSE, "\\.fastq.gz$", "\\_trimmed.fastq.gz")',
+						'String UNPAIREDFORWARDOUT = sub(FORWARD, "\\.fastq.gz$", "\\_trimmed_unpaired.fastq.gz")',
+						'String UNPAIREDREVERSEOUT = sub(REVERSE, "\\.fastq.gz$", "\\_trimmed_unpaired.fastq.gz")'
+					],
+					"outputs": [
+						'String FORWARDOUTPUT = FORWARDOUT',
+						'String REVERSEOUTPUT = REVERSEOUT',
+						'String UNPAIREDFORWARDOUTPUT = UNPAIREDFORWARDOUT',
+						'String UNPAIREDREVERSEOUTPUT = UNPAIREDREVERSEOUT'
+					],
+					"command": [
+						'trimmomatic PE -phred33 -summary ${SUMMARY} ${FORWARD} ${REVERSE} ${FORWARDOUT} ${UNPAIREDFORWARDOUT} ${REVERSEOUT} ${UNPAIREDREVERSEOUT} ILLUMINACLIP:${ILLUMINACLIP} SLIDINGWINDOW:${SLIDINGWINDOW} MINLEN:${MINLEN} 2> trimlog.txt'
+					]
+				}
+			}
+		},
+		
+		{
 			"name":"AlignBWA_S",
 			"text":"Align (BWA)",
 			"inputs" : [
@@ -223,6 +311,52 @@ const data = {
 					],
 					"command": [
 						'bwa mem ${REFERENCEGENOME} ${INPUT} > ${OUTSAMFILE}'
+					]
+				}
+			}
+		},
+		
+		{
+			"name":"AlignBWA_P",
+			"text":"Align (BWA)",
+			"inputs" : [
+				{
+					"name":"FORWARD",
+					"type":"input",
+					"value":"RAW_FASTA_FORWARD"
+				},
+				{
+					"name":"REVERSE",
+					"type":"input",
+					"value":"RAW_FASTA_REVERSE"
+				},
+				{
+					"name":"INPUT",
+					"type":"text",
+					"value":"",
+					"text":"Reference genome"
+				},
+			],
+			"outputs": [
+				{
+					"name":"OUTPUT",
+					"type":"output",
+					"value":"SAM"
+				}
+			],
+			"wdl": {
+				"generator": {
+					"inputs": [
+						'String FORWARD',
+						'String REVERSE',
+						'String REFERENCEGENOME',
+						'String OUTSAMFILE = sub(INPUT, "\\.fastq.gz$", "\\.sam")'
+					],
+					"outputs": [
+						'String OUTPUT = "${OUTSAMFILE}'
+					],
+					"command": [
+						' bwa mem ${REFERENCEGENOME} ${FORWARD} ${REVERSE} > ${OUTSAMFILE}'
 					]
 				}
 			}
