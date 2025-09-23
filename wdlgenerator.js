@@ -258,7 +258,7 @@ function exportInputFile() {
 	const filename = `${document.getElementById("WDLName").value}_input.json`;
 
 	//const data = document.getElementById("debugInput").value;//change to wdl data later
-	const jsonStr = JSON.stringify(data, null, 2);
+	const jsonStr = data;
 	//const jsonStr = data;
 	const blob = new Blob([jsonStr], { type: "application/json" });
 

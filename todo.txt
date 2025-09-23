@@ -1,7 +1,9 @@
 HIGH Priority:
  - Add Password reset option
+ - Add invite system
  - Stylize project manager files
  - Make documentation
+ - Add task source tags and group names
 
 Medium Priority:
  - Add descriptions and infoboxes to tasks
@@ -11,6 +13,8 @@ Medium Priority:
  - Make a unique file input that does this processing every time not just on input
  - Add custom input to select and radio
  - Add raw text generator input
+ - Make tasks importable by source and group name
+ - Make public and or sharable workflows
 
 Low Priority:
  - Test compatibility with other browsers
@@ -22,4 +26,8 @@ Low Priority:
  - Add guest mode
  - Ideas for new input types
  - Add complex outputs (pairs, structs, arrays), these can be used with the "access" tag but may make them unique output types
+ - Make a task correctness evaluating tool
+ - Make multifile task engine
+ - Separate task files to separate github project, make current hidden and only that public
+ - Make a tool to make tasks
 
